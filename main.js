@@ -548,7 +548,7 @@ let CookieGardener = {
 						top:24px;
 						z-index:1000;"></div>
 						<div style="width:300px;">
-							<div class="name">${cap(loc("%1 seed",plant.name))}</div>
+							<div class="name">${plant.name} seed</div>
 						</div>
 					<div class="line"></div>
 				</div>`;
