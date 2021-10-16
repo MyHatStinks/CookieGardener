@@ -1,0 +1,12 @@
+{
+	"Name": "Cookie Gardener",
+	"ID": "cookieGardener",
+	"Author": "my_hat_stinks",
+	"Description": "A collection of garden utilities and improvements for Cookie Clicker.\n\nPlot Tooltips: Hover over an empty plot to see what can spread there.\n\nSeed Tooltips: Show which plants can mutate into your desired plant.\n\nSeed Log: Show locked plants in your seed log.\n\nNext Mutations: Display which plants your garden might grow in the next tick.\n\nNext Available: Show whcih plants you could create using only your current seeds.\n\nPlant Aging: Long-lived plants will no longer freeze or skip ticks. Does not change average growth rate.",
+	"ModVersion": 0.1,
+	"GameVersion": 2.042,
+	"Date": "2021-10-10",
+	"Dependencies": [],
+	"Disabled": 1,
+	"AllowSteamAchievs": 1
+}
