@@ -67,6 +67,7 @@ let CookieGardener = {
 			margin: 0px;
 			padding: 0px;
 			background: none;
+			position: relative;
 		}
 		
 		.GardenSeedSource .TargetPlot {
