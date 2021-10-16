@@ -1432,6 +1432,7 @@ Game.registerMod("cookieGardener",{
 		CookieGardener.Init();
 	},
 	save:function(){
+		return "";
 	},
 	load:function(str){
 	},
