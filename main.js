@@ -131,7 +131,15 @@ let CookieGardener = {
 			// CookieGardener.Settings[cheat] = false;
 		// }
 		
+		
 		let farm = Game.Objects.Farm;
+		
+		if (farm.minigameLoaded) {
+			farm.minigame.save = CookieGardener.Logic.Save;
+			farm.minigame.load = CookieGardener.Logic.Load;
+			CookieGardener.RunOverrides();
+		}
+		
 		// Override tooltip generation
 		let oldLoadMinigames = Game.LoadMinigames;
 		Game.LoadMinigames = function() {
@@ -150,10 +158,7 @@ let CookieGardener = {
 					farm.minigame.save = CookieGardener.Logic.Save;
 					farm.minigame.load = CookieGardener.Logic.Load;
 					oldOnLoad();
-					CookieGardener.Logic.Replace();
-					CookieGardener.Seeds.Replace();
-					CookieGardener.Tooltips.Replace();
-					CookieGardener.Menu.Replace();
+					CookieGardener.RunOverrides();
 				}
 			}, 11);
 			
@@ -173,6 +178,13 @@ let CookieGardener = {
 		document.head.appendChild(CookieGardener.CssElement);
 		
 		CookieGardener.CssElement.textContent = CookieGardener.Css;
+	},
+	
+	RunOverrides: function() {
+		CookieGardener.Logic.Replace();
+		CookieGardener.Seeds.Replace();
+		CookieGardener.Tooltips.Replace();
+		CookieGardener.Menu.Replace();
 	},
 	
 	Mutation: {
