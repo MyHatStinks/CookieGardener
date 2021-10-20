@@ -608,6 +608,7 @@ let CookieGardener = {
 			let str = simplified ? '<div style="padding-bottom: 10px"></div>' : `Sources: <div><div>`;
 			for (let i = 0; i < recipes.length; i++) {
 				let requiredPlants = {...blankPlantList};
+				let requiredMaturePlants = {...blankPlantList};
 				let recipe = recipes[i]
 				str += `<div class="GardenSeedSource">`
 				for (let col = 0; col < (recipe.plants.length / 3); col++) {
@@ -641,6 +642,9 @@ let CookieGardener = {
 						}
 						
 						requiredPlants[plantName] += 1;
+						if (item.type !== "growing") {
+							requiredMaturePlants[plantName] += 1;
+						}
 						
 						switch (item.type ?? "spread") {
 							case "harvest":
@@ -668,8 +672,24 @@ let CookieGardener = {
 					}
 				}
 				
-				let odds = recipe.odds ?? CookieGardener.Mutation.GetOddsFromNeighbours(requiredPlants, requiredPlants)[name];
-				str += `<p>${((odds ?? 0) * 100).toFixed(2)}%</p>`;
+				
+				let oddsStr;
+				if (recipe.odds) {
+					oddsStr = recipe.odds;
+				} else {
+					let oddsMature = CookieGardener.Mutation.GetOddsFromNeighbours(requiredPlants, requiredPlants)[name];
+					let oddsYoung = CookieGardener.Mutation.GetOddsFromNeighbours(requiredPlants, requiredMaturePlants)[name];
+					
+					oddsStr = '<p>' + ((oddsMature ?? 0) * 100).toFixed(2) + '%</p>';
+					
+					// Odds are different with mature
+					if (oddsYoung.toFixed(4) != oddsMature.toFixed(4)) {
+						oddsStr = `<p>${((oddsYoung ?? 0) * 100).toFixed(2)}% (young)</p>
+							<p>${((oddsMature ?? 0) * 100).toFixed(2)}% (mature)</p>`;
+					}
+				}
+				
+				str += oddsStr;
 				str += `</div>`;
 			}
 			
@@ -956,7 +976,7 @@ let CookieGardener = {
 			'brownMold': [
 				{
 					plants: [ {name: 'meddleweed', type:'harvest'} ],
-					odds: 0.2 / 2,
+					odds: '<p>0% to 10% (by age)</p>',
 				},
 				{
 					plants: ['whiteMildew', {type:'target'}],
@@ -1040,7 +1060,7 @@ let CookieGardener = {
 			'crumbspore': [
 				{
 					plants: [ {name: 'meddleweed', type:'harvest'} ],
-					odds: 0.2 / 2,
+					odds: '<p>0% to 10% (by age)</p>',
 				},
 				{
 					plants: ['crumbspore', {type:'target'}],
